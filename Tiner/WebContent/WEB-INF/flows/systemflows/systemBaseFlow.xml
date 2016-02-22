@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<!-- ================================================================ -->
+	<!-- システムが自動生成する共通処理フローです。編集しないでください。 -->
+	<!-- ================================================================ -->
+
+<flow xmlns="http://www.springframework.org/schema/webflow"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+    abstract="true"
+    start-state="startup">
+
+    <!-- システムスタートUPサービス -->
+    <action-state id="startup">
+    	<evaluate expression="mngSystemStratupService.execute(flowRequestContext, false, true, null)" />
+    	<transition on="ok" to="userstartup" />
+		<transition on="syserr" to="syserr" />
+	</action-state>
+
+
+
+	<!-- ユーザスタートUPサービス 
+    <action-state id="userstartup">
+    	<evaluate expression="userStartupService.execute(flowRequestContext, false, true, null)" />
+		<transition on="ok" to="init" />
+		<transition on="syserr" to="syserr" />
+	</action-state>
+-->
+	<!-- 初期処理
+	<action-state id="init">
+		<evaluate expression="excinitService.execute(flowRequestContext, false, true, null)" />
+		<transition on="ng" to="login" />
+		<transition on="ok" to="main" />
+		<transition on="syserr" to="syserr" />
+	</action-state>
+ -->
+	<!-- ログイン画面表示
+	<view-state id="login" view="login/login">
+		<on-entry>
+			<evaluate expression="mngUniquePageService.execute( flowRequestContext, true, false, null)" />
+			<evaluate expression="userLoginBeforeService.execute( flowRequestContext, true, false, null)" />
+		</on-entry>
+		<transition on-exception="jp.co.softbank.ark.execserver.webflow.services.exception.ArkReactorException" to="syserr" />
+		<transition on="login" to="loginaction" />
+		<on-exit>
+			<evaluate expression="mngViewExitService.execute( flowRequestContext, true, false, null)" />
+		</on-exit>
+	</view-state>
+ -->
+	<!-- ログイン処理 
+	<action-state id="loginaction">
+		<evaluate expression="userLoginCustomService.execute( flowRequestContext,false, true, 'AuthService')" />
+		<transition on="ng" to="login" />
+		<transition on="ok" to="custom" />
+		<transition on="syserr" to="syserr" />
+	</action-state>
+-->
+	<!-- ログイン後のカスタム処理
+	<action-state id="custom">
+		<evaluate expression="userInitCustomService.execute(flowRequestContext, false, true, null)" />
+		<transition on="ok" to="init" />
+		<transition on="*" to="syserr" />
+	</action-state>
+ -->
+	<!-- ログアウト前のカスタム処理 
+	<action-state id="logout">
+		<evaluate expression="userLogoutCustomService.execute(flowRequestContext, false, true, null)" />
+		<transition on="ok" to="logoutexec" />
+		<transition on="*" to="syserr" />
+	</action-state>
+-->
+	<!-- ログアウト処理
+	<action-state id="logoutexec">
+		<evaluate expression="excLogoutService.execute(flowRequestContext, false, true, null)" />
+		<transition on="*" to="logouted" />
+	</action-state>
+-->
+	<!-- ログアウト完了 -->
+	<end-state id="logouted" view="/logout"/>
+
+	<!-- システムエラーページ
+	<view-state id="syserr" view="flowRedirect:arksystemerr" />
+ -->
+	<!-- view-stateの親 -->
+	<view-state id="baseview" model="calcForm" >
+	<!-- 
+		<var name="arkFileUploadForm" class="jp.co.softbank.ark.execserver.webflow.services.form.ArkFileUploadForm" />
+		<on-entry>
+			<evaluate expression="mngCsrfTokenService.execute( flowRequestContext, true, false, null)" />
+			<evaluate expression="mngUniquePageService.execute( flowRequestContext, true, false, null)" />
+		</on-entry>
+		<transition on-exception="jp.co.softbank.ark.execserver.webflow.services.exception.ArkReactorException" to="syserr" />
+		<transition on="logout" to="logout" />
+		<transition on="ark_file_upload_ajax" >
+			<evaluate expression="UserFileUploadCmpUpService.upload(flowRequestContext,arkFileUploadForm,false,null)" result="flashScope.ark_file_upload_result" />
+		</transition>
+		<transition on="ark_file_upload_submit" >
+			<evaluate expression="UserFileUploadCmpUpService.upload(flowRequestContext,arkFileUploadForm,true,null)" />
+		</transition>
+		<transition on="ark_file_list" to="arkSystemAction_FileList" />
+		<transition on="ark_file_delete" to="arkSystemAction_FileDelete" />
+		<transition on="ark_file_download" to="arkSystemAction_Download" />
+		<on-exit>
+			<evaluate expression="mngViewExitService.execute( flowRequestContext, true, false, null)" />
+		</on-exit>
+		 -->
+	</view-state>
+
+	<!--subflow-stateの親  -->
+	<subflow-state id="basesubflow" subflow="*">
+	<!--
+		<on-entry>
+			<evaluate expression="mngCsrfTokenService.execute( flowRequestContext, true, false, null)" />
+			<evaluate expression="mngSubFlowCallService.execute( flowRequestContext, true, false, null)" />
+		</on-entry>
+		<transition on="logouted" to="logouted"/>
+		<transition on="syserr" to="syserr" />
+		<on-exit>
+			<evaluate expression="mngSubFlowExitService.execute( flowRequestContext, true, false, null)" />
+		</on-exit>
+	 -->
+	</subflow-state>
+
+	<!--action-stateの親  -->
+	<action-state id="baseaction">
+	<!--
+		<on-entry>
+			<evaluate expression="mngCsrfTokenService.execute( flowRequestContext, true, false, null)" />
+		</on-entry>
+		<transition on="syserr" to="syserr" />
+		<transition on-exception="jp.co.softbank.ark.execserver.webflow.services.exception.ArkReactorException" to="syserr" />
+		 -->
+	</action-state>
+
+	<!-- ajax応答の遷移先画面 
+	<view-state id="arkajaxresultnextview" view="externalRedirect:http://localhost" />
+-->
+	<!-- ファイル一覧取得
+	<action-state id="arkSystemAction_FileList">
+		<evaluate expression="UserFileUploadCmpListService.execute( flowRequestContext, false, true, null)" />
+	    <transition on="*" to="arkSystemAjaxResultAction" />
+	</action-state>
+-->
+	<!-- ファイル削除 
+	<action-state id="arkSystemAction_FileDelete">
+		<evaluate expression="UserFileUploadCmpDelService.execute( flowRequestContext, false, true, null)" />
+	    <transition on="*" to="arkSystemAjaxResultAction" />
+	</action-state>
+-->
+	<!-- ダウンロードファイル作成 
+	<action-state id="arkSystemAction_Download">
+		<on-entry>
+			<evaluate expression="mngCsrfTokenService.execute( flowRequestContext, true, true, null)" />
+		</on-entry>
+	    <evaluate expression="UserFileUploadCmpDlService.execute( flowRequestContext, true, true, null)" />
+	    <transition on="ok" to="arkSystemActionDownloadExc" />
+	    <transition on="syserr" to="syserr" />
+	    <transition on-exception="jp.co.softbank.ark.execserver.webflow.services.exception.ArkReactorException" to="syserr" />
+	</action-state>
+-->
+	<!-- ajax応答
+	<action-state id="arkSystemAjaxResultAction">
+		<evaluate expression="subAjaxResultJsonService.execute( flowRequestContext, false, false, null)" />
+		<transition on="*" to="arkajaxresultnextview"/>
+	</action-state>
+-->
+	<!-- ファイルダウンロード 
+	<action-state id="arkSystemActionDownloadExc">
+		<evaluate expression="excFileDownloadService.execute( flowRequestContext, false, true, null)" />
+		<transition on="*" to="arkajaxresultnextview"/>
+	</action-state>
+-->
+</flow>

@@ -1,16 +1,76 @@
-<?xml version="1.0" encoding="utf-8"?>
-<beans 
-  xmlns="http://www.springframework.org/schema/beans" 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xmlns:context="http://www.springframework.org/schema/context"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans 
-    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
-    http://www.springframework.org/schema/context 
-    http://www.springframework.org/schema/context/spring-context-2.5.xsd">
-    <!-- 搜索 samples.webflow 包里的 @Component 注解，并将其部署到容器中 --> 
-    <context:component-scan base-package="samples.webflow" /> 
-    <!-- 启用基于注解的配置 --> 
-    <context:annotation-config /> 
-    <import resource="webmvc-config.xml"/>
-    <import resource="webflow-config.xml"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:webflow="http://www.springframework.org/schema/webflow-config"
+   xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+       http://www.springframework.org/schema/webflow-config
+       http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.3.xsd">
+
+ 	<!-- FlowRegistry Setting -->
+ 	<webflow:flow-registry id="flowRegistry" parent="systemflowRegistry"
+     		flow-builder-services="flowBuilderServices"
+     		base-path="classpath:/META-INF/flows/flows">
+   		<webflow:flow-location-pattern value="*.xml" />
+ 	</webflow:flow-registry>
+ 	
+	<webflow:flow-registry id="systemflowRegistry"
+		flow-builder-services="flowBuilderServices"
+		base-path="classpath:/META-INF/flows/systemflows">
+	<webflow:flow-location-pattern value="*.xml" />
+	</webflow:flow-registry>
+	
+	<!-- FlowBuilderServices Setting -->
+ 	<webflow:flow-builder-services id="flowBuilderServices"
+    	 view-factory-creator="mvcViewFactoryCreator"
+     	validator="validator"
+     	development="true"/>
+	
+ 	<!-- FlowExecutor Setting -->
+ 	<webflow:flow-executor id="flowExecutor" flow-registry="flowRegistry">
+		<webflow:flow-execution-repository max-executions="5" max-execution-snapshots="-1"/>
+	</webflow:flow-executor>
+    
+ 	<!-- View Setting -->
+
+	 <bean id="templateResolver"
+	   class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+	   <property name="prefix" value="/WEB-INF/pages/" />
+	   <property name="suffix" value=".html" />
+	   <property name="templateMode" value="HTML5" />
+	   <property name="characterEncoding" value="UTF-8"/>
+	   <property name="cacheable" value="false" />
+	</bean>
+	
+	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+	   <property name="templateResolver" ref="templateResolver" />
+	</bean>
+
+	<bean id="flowViewResolver" class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+	   <property name="templateEngine" ref="templateEngine" />
+	   <property name="characterEncoding" value="UTF-8"/>
+	</bean>
+
+	<bean id="mvcViewFactoryCreator"
+    	class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator">
+    	<property name="flowViewResolver" ref="flowViewResolver"></property>
+		<property name="useSpringBeanBinding" value="true" />
+	</bean>
+	
+	<!-- Custom flow handler -->
+	<bean name="flowViewResolver" class="org.springframework.webflow.mvc.builder.DelegatingFlowViewResolver">
+		<constructor-arg index="0" ref="thymeleafViewResolver"/>
+	</bean> 
+	
+	 <!-- Spring Web Flow HandlerMapping Setting -->
+	 <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
+	   <property name="flowRegistry" ref="flowRegistry" />
+	 </bean>
+
+	 <!-- Spring Web Flow HandlerAdapter  Setting -->
+	 <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
+	   <property name="flowExecutor" ref="flowExecutor"/>
+	 </bean>
+    
 </beans>
