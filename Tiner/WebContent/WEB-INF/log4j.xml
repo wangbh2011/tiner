@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+	<!-- ******************************************* -->
+	<!-- Appender定義                                -->
+	<!-- ******************************************* -->
+
+	<!-- =========================================== -->
+	<!-- アプリケーションログ                        -->
+	<!-- =========================================== -->
+	<appender name="consoleLogAppender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.EnhancedPatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd} %d{HH:mm:ss}^%X{LOGIN_USER_ID}^%p^%X{SERVER_OS_NAME}^%X{SERVER_ADDRESS}^ark^%c^%X{CLIENT_ADDRESS}^%X{USER_AGENT}^%m%n" />
+		</layout>
+	</appender>
+	<appender name="appLogAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${tomcat.drive}/sb/${tomcat.domain}/ark/${tomcat.node}/logs/applog.log" />
+
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="Append" value="true" />
+		<layout class="org.apache.log4j.EnhancedPatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd} %d{HH:mm:ss}^%X{LOGIN_USER_ID}^%p^%X{SERVER_OS_NAME}^%X{SERVER_ADDRESS}^ark^%c^%X{CLIENT_ADDRESS}^%X{USER_AGENT}^%m%n" />
+		</layout>
+	</appender>
+
+	<!-- =========================================== -->
+	<!-- システムログ                                -->
+	<!-- =========================================== -->
+	<appender name="sysLogAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${tomcat.drive}/sb/${tomcat.domain}/ark/${tomcat.node}/logs/syslog.log" />
+		<param name="File" value="c:/sb/ark/logs/syslog.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="Append" value="true" />
+		<layout class="org.apache.log4j.EnhancedPatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd} %d{HH:mm:ss}^%X{LOGIN_USER_ID}^%p^%X{SERVER_OS_NAME}^%X{SERVER_ADDRESS}^ark^%c^%X{CLIENT_ADDRESS}^%X{USER_AGENT}^%m%n" />
+			<!-- <param name="ConversionPattern" value="%d{yyyy-MM-dd}^%d{HH:mm:ss}^%C^%M^%p^%m%n" />  -->
+		</layout>
+	</appender>
+
+	<!-- =========================================== -->
+	<!-- ウォッチログ                                    -->
+	<!-- =========================================== -->
+	<appender name="watchLogAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${tomcat.drive}/sb/${tomcat.domain}/ark/${tomcat.node}/logs/watch.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="Append" value="true" />
+		<layout class="org.apache.log4j.EnhancedPatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd} %d{HH:mm:ss}^%X{LOGIN_USER_ID}^%p^%X{SERVER_OS_NAME}^%X{SERVER_ADDRESS}^ark^%c^%X{CLIENT_ADDRESS}^%X{USER_AGENT}^%m%n" />
+			<!-- <param name="ConversionPattern" value="%d{yyyy-MM-dd}^%d{HH:mm:ss}^%C^%M^%p^%m%n" /> -->
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMin" value="error" />
+			<param name="levelMax" value="fatal" />
+		</filter>
+	</appender>
+
+	<!-- =========================================== -->
+	<!-- その他テスト用ログ                          -->
+	<!-- =========================================== -->
+	<appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+		<param name="threshold" value="debug" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p [%t] (%F:%L) - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- ******************************************* -->
+	<!-- Logger定義                                  -->
+	<!-- ******************************************* -->
+
+	<!-- アプリケーションログ
+	<logger name="a">
+		<level value="debug" />
+		<appender-ref ref="consoleLogAppender" />
+		<appender-ref ref="appLogAppender" />
+		<appender-ref ref="watchLogAppender" />
+	</logger> -->
+
+</log4j:configuration>
