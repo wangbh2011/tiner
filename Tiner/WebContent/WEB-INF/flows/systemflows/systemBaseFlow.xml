@@ -12,12 +12,7 @@
     abstract="true"
     start-state="startup">
 
-    <!-- システムスタートUPサービス -->
-    <action-state id="startup">
-    	<evaluate expression="mngSystemStratupService.execute(flowRequestContext, false, true, null)" />
-    	<transition on="ok" to="userstartup" />
-		<transition on="syserr" to="syserr" />
-	</action-state>
+
 
 
 

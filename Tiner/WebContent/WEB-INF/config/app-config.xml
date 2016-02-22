@@ -11,13 +11,13 @@
  	<!-- FlowRegistry Setting -->
  	<webflow:flow-registry id="flowRegistry" parent="systemflowRegistry"
      		flow-builder-services="flowBuilderServices"
-     		base-path="classpath:/META-INF/flows/flows">
+     		base-path="/WEB-INF/flows/flows">
    		<webflow:flow-location-pattern value="*.xml" />
  	</webflow:flow-registry>
  	
 	<webflow:flow-registry id="systemflowRegistry"
 		flow-builder-services="flowBuilderServices"
-		base-path="classpath:/META-INF/flows/systemflows">
+		base-path="/WEB-INF/flows/systemflows">
 	<webflow:flow-location-pattern value="*.xml" />
 	</webflow:flow-registry>
 	
@@ -47,7 +47,7 @@
 	   <property name="templateResolver" ref="templateResolver" />
 	</bean>
 
-	<bean id="flowViewResolver" class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+	<bean id="thymeleafViewResolver" class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
 	   <property name="templateEngine" ref="templateEngine" />
 	   <property name="characterEncoding" value="UTF-8"/>
 	</bean>

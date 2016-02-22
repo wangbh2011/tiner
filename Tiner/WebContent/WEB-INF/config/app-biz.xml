@@ -12,9 +12,9 @@
 	http://www.springframework.org/schema/mvc
 	http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
 
-    <context:component-scan base-package="com.tiner" /> 
+    <context:component-scan base-package="com.tiner.services" /> 
 	
-	<!-- 
+	
 	<bean id="validator"
 	    class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
 		<property name="validationMessageSource" ref="messageSource"/>
@@ -22,9 +22,9 @@
 	
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<property name="basenames" value="classpath:/META-INF/messages,classpath:/META-INF/errmessages,classpath:/ValidationMessages"/>
+		<property name="basenames" value="/WEB-INF/messages,/WEB-INF/errmessages,classpath:/ValidationMessages"/>
 	</bean>
-	 -->
+	
 	
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -33,5 +33,5 @@
 	
 	
 	
-	<mvc:resources mapping="/resources/**" location="classpath:/META-INF/web-resources/" />
+	<mvc:resources mapping="/resources/**" location="/WEB-INF/web-resources/" />
 </beans>

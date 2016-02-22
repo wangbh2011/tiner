@@ -9,7 +9,7 @@
 <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
-        classpath:/META-INF/config/app-biz.xml
+        /WEB-INF/config/app-biz.xml
     </param-value>
 </context-param>
 
@@ -58,7 +58,7 @@
   <init-param>
     <param-name>contextConfigLocation</param-name> 
     <param-value> 
-        classpath:/META-INF/config/app-config.xml
+        /WEB-INF/config/app-config.xml
     </param-value> 
   </init-param> 
   <load-on-startup>1</load-on-startup>
