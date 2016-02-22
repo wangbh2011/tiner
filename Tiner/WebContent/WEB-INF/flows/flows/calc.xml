@@ -7,14 +7,24 @@
      <!-- システムスタートUPサービス -->
     <action-state id="startup">
         <evaluate expression="mainService.execute(null,null)" />
-        <transition on="ok" to="index" />
+        <transition on="ok" to="viewCart" />
         <transition on="syserr" to="syserr" />
     </action-state>
     
-    <view-state id="index" view="viewOrder">
-        <transition on="confirm" to="orderConfirmed">
-        </transition>
-    </view-state>
+    <view-state id="viewCart" parent="systemBaseFlow#baseview"> 
+        <transition on="submit" to="viewOrder">  
+        </transition>  
+    </view-state>  
+    <view-state id="viewOrder" parent="systemBaseFlow#baseview">
+        <transition on="confirm" to="orderConfirmed">  
+        </transition>  
+    </view-state>  
+    <view-state id="orderConfirmed" parent="systemBaseFlow#baseview">
+        <transition on="returnToIndex" to="returnToIndex">  
+        </transition>  
+    </view-state>  
+    <end-state id="returnToIndex" view="externalRedirect:servletRelative:/index.jsp">  
+    </end-state>  
  <!-- 
     <action-state id="main" parent="systemBaseFlow#baseaction">
 		<evaluate expression="mngEmptyService.execute( flowRequestContext, false, true, null)" />
