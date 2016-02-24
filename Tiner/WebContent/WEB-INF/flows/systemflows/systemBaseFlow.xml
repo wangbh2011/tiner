@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-	<!-- ================================================================ -->
-	<!-- システムが自動生成する共通処理フローです。編集しないでください。 -->
-	<!-- ================================================================ -->
-
 <flow xmlns="http://www.springframework.org/schema/webflow"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="
@@ -12,8 +7,12 @@
     abstract="true"
     start-state="startup">
 
+     <var name="baseForm" class="com.tiner.base.TinerBaseForm"/>
 
-
+     <action-state id="startup">
+        <evaluate expression="startUpService.execute(flowRequestContext,null)" />
+        <transition on="ok" to="index" />
+    </action-state>
 
 
 	<!-- ユーザスタートUPサービス 
@@ -79,7 +78,7 @@
 	<view-state id="syserr" view="flowRedirect:arksystemerr" />
  -->
 	<!-- view-stateの親 -->
-	<view-state id="baseview" model="calcForm" >
+	<view-state id="baseview" model="baseForm" >
 	<!-- 
 		<var name="arkFileUploadForm" class="jp.co.softbank.ark.execserver.webflow.services.form.ArkFileUploadForm" />
 		<on-entry>

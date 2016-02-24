@@ -4,12 +4,23 @@
     xsi:schemaLocation="http://www.springframework.org/schema/webflow  
  http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">  
  
-     <!-- システムスタートUPサービス -->
-    <action-state id="startup">
-        <evaluate expression="mainService.execute(null,null)" />
+     <var name="baseForm" class="com.tiner.form.CartForm"/>
+    
+     <action-state id="startup" parent="systemBaseFlow#baseaction"> 
+        <evaluate expression="startUpService.execute(flowRequestContext,baseForm)" />
+        <transition on="ok" to="index" />
+    </action-state>
+    
+    <action-state id="main" parent="systemBaseFlow#baseaction"> 
+        <evaluate expression="mainService.execute(flowRequestContext,baseForm)" />
         <transition on="ok" to="viewCart" />
         <transition on="syserr" to="syserr" />
     </action-state>
+    
+    <view-state id="index" parent="systemBaseFlow#baseview"> 
+        <transition on="submit" to="main">  
+        </transition>  
+    </view-state>  
     
     <view-state id="viewCart" parent="systemBaseFlow#baseview"> 
         <transition on="submit" to="viewOrder">  

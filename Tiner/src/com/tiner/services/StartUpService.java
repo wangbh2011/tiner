@@ -5,14 +5,13 @@ import org.springframework.webflow.engine.model.Model;
 
 import com.tiner.base.TinerBaseService;
 
-@Service("mainService")
-public class MainService extends TinerBaseService {
+@Service("startUpService")
+public class StartUpService extends TinerBaseService{
 
 	@Override
 	protected String _execute(Model model) {
-		request.getConversationScope().put("name", this.paramMap.get("name"));
-		
-		return "ok";
+		// to index.html
+		return RETURN_CODE_OK;
 	}
 
 }
