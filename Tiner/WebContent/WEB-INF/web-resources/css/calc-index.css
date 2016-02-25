@@ -1,0 +1,66 @@
+@CHARSET "UTF-8";
+
+.calc-list{
+    padding:0px 6%;
+    position:relative;
+    min-width:1024px;
+}
+.calc-list P{
+    text-align:left;
+    margin:10px 0px;
+}
+.calc-list table{
+}
+
+.calc-head th{
+    background: #0275B7;
+    color:#fff;
+    height: 40px;
+    border-color:#ccc;
+}
+.calc-body td{
+    position:relative;
+    padding: 0px;
+    height:40px;
+    width:240px;
+    overflow:hidden;
+    text-indent: 10px;
+}
+.calc-body td:not(:nth-of-type(1)){
+    width:200px;
+}
+.calc-body td:nth-of-type(8){
+}
+.calc-body textarea{
+    border: 1px #fff solid;
+}
+.calc-body textarea:focus{
+    position:fixed;
+    height: 120px !important;
+    width:200px !important;
+}
+.calc-body input{
+}
+.calc-body textarea,.calc-body input{
+    height: 100% !important;
+    width:97% !important;
+    border: 1px #fff solid;
+    margin-left:-10px;
+}
+.calc-body tr:hover,
+.calc-body tr:hover>td,
+.calc-body tr:hover>td>input,
+.calc-body tr:hover>td>textarea
+{
+    background:#C3E0F1;
+}
+.calc-body tr.active,
+.calc-body tr.active>td,
+.calc-body tr.active>td>input,
+.calc-body tr.active>td>textarea{
+    background:aliceblue;
+}
+.calc-body tr.active>td>input,
+.calc-body tr.active>td>textarea{
+    border: 1px aliceblue solid;
+}

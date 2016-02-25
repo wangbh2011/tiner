@@ -2,16 +2,106 @@
 <html>  
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
-<title>Cart Application</title>  
+<link th:substituteby="./header :: common_link"/>
+<link rel="stylesheet" href="resources/css/calc-index.css"></link>
+<script src="resources/js/calc.js">
+</script>
 </head>  
-<body>  
-    <h1>Hello!</h1>  
-    <br />  
-    <form action="#" th:action="${flowExecutionUrl}" method="POST">
-    name:
-        <input type="text" name="name"/>
-        <br/>
-        <input type="submit" name="_eventId_submit" value="Submit" />
-    </form>
+<body>
+<form action="#" th:action="${flowExecutionUrl}" method="POST">
+<center>
+<div class="calc-list">
+<p>
+今日汇率：5.84
+</p>
+    <table>
+        <thead class="calc-head">
+        <tr>
+            <th>
+                日期
+            </th>
+            <th>
+                顾客姓名
+            </th>
+            <th>
+                商品种类
+            </th>
+            <th>
+                数量
+            </th>
+            <th>
+                日元价格
+            </th>
+            <th>
+                人民币价格
+            </th>
+            <th>
+                成交价格
+            </th>
+            <th>
+                利润
+            </th>
+            <th>
+                状态
+            </th>
+            <th>
+                邮送日期
+            </th>
+            <th>
+                备注
+            </th>
+        </tr>
+        </thead>
+        <tbody class="calc-body">
+        <tr class="clone">
+            <td class="readonly">
+                2016-02-25 20:49
+            </td>
+            <td>
+                <input type="text" name="name"/>
+            </td>
+            <td>
+                <input type="text" name="goodsType"/>
+            </td>
+            <td>
+                <input type="text" name="quantity"/>
+            </td>
+            <td>
+                <input type="text" name="jpyPrice"/>
+            </td>
+            <td>
+                <input type="text" name="cnyPrice"/>
+            </td>
+            <td>
+                <input type="text" name="cnyDealPrice"/>
+            </td>
+            <td class="calc-googs-profit readonly">
+                200
+            </td>
+            <td>
+                <input type="text" name="status"/>
+            </td>
+            <td>
+                <input type="text" name="sendDate"/>
+            </td>
+            <td>
+                <textarea name="remark"></textarea>
+            </td>
+        </tr>
+        </tbody>
+    
+    </table>
+<p>
+    <input type="button" id="addRow" value="添加" />
+    <input type="button" id="delRow" value="删除" />
+    <input type="submit" name="_eventId_submit" value="Submit" />
+</p>
+
+</div>
+
+
+
+</center>
+</form>
 </body>  
 </html>
