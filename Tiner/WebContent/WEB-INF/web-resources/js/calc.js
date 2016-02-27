@@ -35,6 +35,19 @@ $(document).ready(function(){
 		currentTR.remove();
 	});
 	
+	
+	// 取得当前汇率
+	$.get({
+		url:"http://api.aoikujira.com/kawase/json/jpy",
+		dataType : "json",
+		type:"get",
+		
+	}).done(function(res){
+		var rate = JSON.parse(res);
+		var cny = rate.CNY * 100;
+		$(".rate").text(cny);
+	});
+	
 });
 
 

@@ -6,7 +6,7 @@ keygen,
 select, 
 button {
     border: solid 1px #ccc;
-    border-radius: 5px;
+    border-radius: 0px;
     outline: transparent;
 }
 input:hover,
@@ -34,8 +34,9 @@ th,td{
 input[type="button"],
 input[type="submit"],
 button{
+    border-radius: 5px;
     background: #0275B7;
-    padding: 15px 30px;
+    padding: 10px 30px;
     border:1px solid #0275B7;
     text-align: center;
     color: #f0f0f0;
