@@ -8,11 +8,11 @@
 </script>
 </head>  
 <body>
-<form action="#" th:action="${flowExecutionUrl}" method="POST">
+<form action="#" th:action="${flowExecutionUrl}" method="POST" id="calcForm">
 <center>
 <div class="calc-list">
 <p>
-今日汇率：<span class=".rate">5.84</span>
+今日汇率：<span class="rate">5.84</span>
 </p>
     <table>
         <thead class="calc-head">
@@ -53,30 +53,64 @@
         </tr>
         </thead>
         <tbody class="calc-body">
+        <tr th:each="item : ${form.goodsList}" class="db-data" >
+            <input type="hidden" name="id" th:value="${item.id}"/>
+            <td class="created readonly" th:text="${#dates.format(item.created, 'yyyy-MM-dd HH:mm:ss')}">
+            </td>
+            <td>
+                <input type="text" name="customerName" th:value="${item.customerName}"/>
+            </td>
+            <td>
+                <input type="text" name="productCategory" th:value="${item.productCategory}"/>
+            </td>
+            <td>
+                <input type="number" name="quantity" th:value="${item.quantity}"/>
+            </td>
+            <td>
+                <input type="number" name="jpyPrice" th:value="${item.jpyPrice}"/>
+            </td>
+            <td class="cnyPrice readonly" th:text="${item.cnyPrice}" >
+            </td>
+            <td>
+                <input type="text" name="cnyDealPrice" th:value="${item.cnyDealPrice}"/>
+            </td>
+            <td class="productProfit readonly" th:text="${item.productProfit}">
+                0
+            </td>
+            <td>
+                <input type="text" name="status" th:value="${item.status}"/>
+            </td>
+            <td>
+                <input type="text" name="sendDate" th:value="${#dates.format(item.sendDate, 'yyyy-MM-dd')}"/>
+            </td>
+            <td>
+                <textarea name="remark" th:text="${item.remark}"></textarea>
+            </td>
+        </tr>
         <tr class="clone">
             <td class="readonly">
                 2016-02-25 20:49
             </td>
             <td>
-                <input type="text" name="name"/>
+                <input type="text" name="customerName"/>
             </td>
             <td>
-                <input type="text" name="goodsType"/>
+                <input type="text" name="productCategory"/>
             </td>
             <td>
-                <input type="text" name="quantity"/>
+                <input type="number" name="quantity"/>
             </td>
             <td>
-                <input type="text" name="jpyPrice"/>
+                <input type="number" name="jpyPrice"/>
             </td>
-            <td>
-                <input type="text" name="cnyPrice"/>
+            <td class="cnyPrice readonly">
+                
             </td>
             <td>
                 <input type="text" name="cnyDealPrice"/>
             </td>
-            <td class="calc-googs-profit readonly">
-                200
+            <td class="productProfit readonly">
+                0
             </td>
             <td>
                 <input type="text" name="status"/>
@@ -94,7 +128,8 @@
 <p>
     <input type="button" id="addRow" value="添加" />
     <input type="button" id="delRow" value="删除" />
-    <input type="submit" name="_eventId_submit" value="Submit" />
+    <input type="hidden" name="goodsJsonString"/>
+    <input type="button" name="_eventId_submit" id="submit" value="Submit" />
 </p>
 
 </div>

@@ -34,10 +34,14 @@
 .calc-body textarea{
     border: 1px #fff solid;
 }
+.calc-body td.minus{
+	color:#f00;
+}
 .calc-body textarea:focus{
     position:fixed;
-    height: 120px !important;
-    width:200px !important;
+    max-height: 200px !important;
+    max-width:300px !important;
+    z-index:100;
 }
 .calc-body input{
 }

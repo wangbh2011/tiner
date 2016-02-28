@@ -2,22 +2,23 @@
 <flow xmlns="http://www.springframework.org/schema/webflow"  
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
     xsi:schemaLocation="http://www.springframework.org/schema/webflow  
- http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">  
+ http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+ >  
  
-     <var name="baseForm" class="com.tiner.form.CartForm"/>
+     <var name="form" class="com.tiner.form.CartForm"/>
     
      <action-state id="startup" parent="systemBaseFlow#baseaction"> 
-        <evaluate expression="startUpService.execute(flowRequestContext,baseForm)" />
+        <evaluate expression="startUpService.execute(flowRequestContext,form)" />
         <transition on="ok" to="index" />
     </action-state>
     
-    <action-state id="main" parent="systemBaseFlow#baseaction"> 
-        <evaluate expression="mainService.execute(flowRequestContext,baseForm)" />
-        <transition on="ok" to="viewCart" />
+    <action-state id="updateProduct" parent="systemBaseFlow#baseaction"> 
+        <evaluate expression="mainService.execute(flowRequestContext,form)" />
+        <transition on="ok" to="startup" />
         <transition on="syserr" to="syserr" />
     </action-state>
     
-    <view-state id="index" parent="systemBaseFlow#baseview"> 
+    <view-state id="index" parent="systemBaseFlow#baseview" model="form"> 
         <transition on="submit" to="main">  
         </transition>  
     </view-state>  

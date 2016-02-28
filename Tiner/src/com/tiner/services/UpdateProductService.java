@@ -1,16 +1,24 @@
 package com.tiner.services;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 import org.springframework.webflow.engine.model.Model;
 
 import com.tiner.base.TinerBaseService;
+import com.tiner.form.CartForm;
+import com.tiner.logics.CalcLogic;
 
-@Service("mainService")
-public class MainService extends TinerBaseService {
+@Service("updateProduct")
+public class UpdateProductService extends TinerBaseService {
 
+	
 	@Override
 	protected String _execute(Model model) {
-		request.getConversationScope().put("name", this.paramMap.get("name"));
+
+		
+		CartForm form = (CartForm)model;
+		
 		
 		return "ok";
 	}
