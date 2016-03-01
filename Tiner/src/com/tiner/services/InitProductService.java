@@ -8,8 +8,8 @@ import com.tiner.base.TinerBaseService;
 import com.tiner.form.CartForm;
 import com.tiner.logics.CalcLogic;
 
-@Service("startUpService")
-public class StartUpService extends TinerBaseService{
+@Service("initProductService")
+public class InitProductService extends TinerBaseService{
 
 	@Autowired
 	private CalcLogic clogic;
@@ -18,7 +18,7 @@ public class StartUpService extends TinerBaseService{
 
 		
 		
-		// CartForm form = (CartForm)model;
+		CartForm form = (CartForm)model;
 		
 	//	form.setGoodsList(clogic.selectGoods());
 		// to index.html

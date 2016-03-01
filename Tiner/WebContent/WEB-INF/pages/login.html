@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link th:substituteby="./header :: common_link" />
+</head>
+<body>
+ <form action="#" th:action="${flowExecutionUrl}" method="POST" id="calcForm">
+  <div align="center">用户登录</div>
+  <table style="width: 100%; margin-top: 15px; border: 0;">
+   <tr style="width: 100%;">
+    <td style="width: 50%" align="right">用户名</td>
+    <td><input type="text" name="username" /></td>
+   </tr>
+   <tr style="">
+    <td style="width: 50%" align="right">密码</td>
+    <td><input type="password" name="password" /></td>
+   </tr>
+  </table>
+  <div align="center" style="margin-top: 20px">
+   <input id="loginButton" type="submit" value="登录" name="_eventId_submit" />
+  </div>
+ </form>
+</body>
+</html>
