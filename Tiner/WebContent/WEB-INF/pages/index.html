@@ -8,9 +8,8 @@
 </script>
 </head>  
 <body>
-<form action="#" th:action="${flowExecutionUrl}" method="POST" id="calcForm">
-<center>
-<div class="calc-list">
+<form action="#" th:action="${flowExecutionUrl}" method="POST">
+<div class="calc-list main">
 <p>
 今日汇率：<span class="rate">5.84</span>
 </p>
@@ -31,6 +30,9 @@
             </th>
             <th>
                 日元价格
+            </th>
+            <th>
+                当时汇率
             </th>
             <th>
                 人民币价格
@@ -55,7 +57,9 @@
         <tbody class="calc-body">
         <tr th:each="item : ${form.goodsList}" class="db-data" >
             <input type="hidden" name="id" th:value="${item.id}"/>
-            <td class="created readonly" th:text="${#dates.format(item.created, 'yyyy-MM-dd HH:mm:ss')}">
+            <td th:if="${item.created != null}" class="created readonly" th:text="${#dates.format(item.created, 'yyyy-MM-dd HH:mm:ss')}">
+            </td>
+            <td th:if="${item.created == null}" class="created readonly">
             </td>
             <td>
                 <input type="text" name="customerName" th:value="${item.customerName}"/>
@@ -69,6 +73,8 @@
             <td>
                 <input type="number" name="jpyPrice" th:value="${item.jpyPrice}"/>
             </td>
+            <td class="rate readonly" th:text="${item.rate}">
+            </td>
             <td class="cnyPrice readonly" th:text="${item.cnyPrice}" >
             </td>
             <td>
@@ -78,10 +84,11 @@
                 0
             </td>
             <td>
-                <input type="text" name="status" th:value="${item.status}"/>
+                <input type="text" name="goodsStatus" th:value="${item.status}"/>
             </td>
             <td>
-                <input type="text" name="sendDate" th:value="${#dates.format(item.sendDate, 'yyyy-MM-dd')}"/>
+                <input th:if="${item.sendDate != null}" type="text" name="sendDate" th:value="${#dates.format(item.sendDate, 'yyyy-MM-dd')}"/>
+                <input th:if="${item.sendDate == null}" type="text" name="sendDate"/>
             </td>
             <td>
                 <textarea name="remark" th:text="${item.remark}"></textarea>
@@ -103,8 +110,9 @@
             <td>
                 <input type="number" name="jpyPrice"/>
             </td>
+            <td class="rate readonly" >
+            </td>
             <td class="cnyPrice readonly">
-                
             </td>
             <td>
                 <input type="text" name="cnyDealPrice"/>
@@ -113,7 +121,7 @@
                 0
             </td>
             <td>
-                <input type="text" name="status"/>
+                <input type="text" name="goodsStatus"/>
             </td>
             <td>
                 <input type="text" name="sendDate"/>
@@ -129,14 +137,12 @@
     <input type="button" id="addRow" value="添加" />
     <input type="button" id="delRow" value="删除" />
     <input type="hidden" name="goodsJsonString"/>
-    <input type="button" name="_eventId_submit" id="submit" value="Submit" />
+    <input type="hidden" name="_eventId_submit"/>
+    <input type="button" id="doPost" value="提交" />
 </p>
 
 </div>
 
-
-
-</center>
 </form>
 </body>  
 </html>

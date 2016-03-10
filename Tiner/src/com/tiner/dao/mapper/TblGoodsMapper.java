@@ -1,10 +1,13 @@
 package com.tiner.dao.mapper;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.type.JdbcType;
 
 import com.tiner.dao.client.TblGoodsProver;
@@ -30,4 +33,10 @@ public interface TblGoodsMapper {
 		@Result(property = "created", column = "created"),
 	})
 	public List<TblGoodsModel> selectAll();
+	
+	@InsertProvider(type=TblGoodsProver.class,method="insertGoods")
+	public int insertGoods(Map<String,String> item);
+	
+	@UpdateProvider(type=TblGoodsProver.class,method="updateGoods")
+	public int updateGoods(Map<String,String> item);
 }

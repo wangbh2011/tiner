@@ -20,7 +20,7 @@ public class InitProductService extends TinerBaseService{
 		
 		CartForm form = (CartForm)model;
 		
-	//	form.setGoodsList(clogic.selectGoods());
+		form.setGoodsList(clogic.selectGoods());
 		// to index.html
 		return RETURN_CODE_OK;
 	}

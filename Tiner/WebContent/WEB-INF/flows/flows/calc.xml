@@ -1,50 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<flow xmlns="http://www.springframework.org/schema/webflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow  
  http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
 	<var name="form" class="com.tiner.form.CartForm" />
+
 	<action-state id="startup" parent="systemBaseFlow#baseaction">
 		<evaluate expression="startUpService.execute(flowRequestContext,form)" />
 		<transition on="ok" to="login" />
 	</action-state>
+
 	<action-state id="initProduct" parent="systemBaseFlow#baseaction">
 		<evaluate expression="initProductService.execute(flowRequestContext,form)" />
 		<transition on="ok" to="index" />
 	</action-state>
+
 	<view-state id="login" parent="systemBaseFlow#baseview" model="form">
 		<transition on="submit" to="dologin">
 		</transition>
 	</view-state>
+
 	<action-state id="dologin" parent="systemBaseFlow#baseaction">
 		<evaluate expression="loginService.execute(flowRequestContext,form)" />
 		<transition on="ok" to="initProduct" />
 		<transition on="ng" to="login" />
 	</action-state>
+
 	<action-state id="updateProduct" parent="systemBaseFlow#baseaction">
-		<evaluate expression="mainService.execute(flowRequestContext,form)" />
-		<transition on="ok" to="startup" />
+		<evaluate expression="updateProductService.execute(flowRequestContext,form)" />
+		<transition on="ok" to="initProduct" />
 		<transition on="syserr" to="syserr" />
 	</action-state>
-	
+
 	<view-state id="index" parent="systemBaseFlow#baseview" model="form">
-		<transition on="submit" to="main">
+		<transition on="submit" to="updateProduct">
 		</transition>
 	</view-state>
+
 	<view-state id="viewCart" parent="systemBaseFlow#baseview">
 		<transition on="submit" to="viewOrder">
 		</transition>
 	</view-state>
+
 	<view-state id="viewOrder" parent="systemBaseFlow#baseview">
 		<transition on="confirm" to="orderConfirmed">
 		</transition>
 	</view-state>
+
 	<view-state id="orderConfirmed" parent="systemBaseFlow#baseview">
 		<transition on="returnToIndex" to="returnToIndex">
 		</transition>
 	</view-state>
+
 	<end-state id="returnToIndex" view="externalRedirect:servletRelative:/index.jsp">
 	</end-state>
-	<!-- <action-state id="main" parent="systemBaseFlow#baseaction"> <evaluate expression="mngEmptyService.execute( flowRequestContext, 
-		false, true, null)" /> <transition on="ok" to="loginInit" /> </action-state> <view-state id="A902DispItemConfig" parent="systemBaseFlow#baseview"> 
-		</view-state> -->
+
 </flow>

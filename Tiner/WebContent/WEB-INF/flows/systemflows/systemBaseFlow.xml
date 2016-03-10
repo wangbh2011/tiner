@@ -119,6 +119,7 @@
 
 	<!--action-stateの親  -->
 	<action-state id="baseaction">
+        <transition on="login" to="login" />
 	<!--
 		<on-entry>
 			<evaluate expression="mngCsrfTokenService.execute( flowRequestContext, true, false, null)" />

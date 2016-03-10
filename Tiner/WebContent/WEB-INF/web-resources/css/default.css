@@ -1,4 +1,9 @@
 @CHARSET "UTF-8";
+div.main{
+    text-align:center;
+    width:80%;
+    margin: 0 auto;
+}
 /*基本CSS定义*/
 input, 
 textarea, 
