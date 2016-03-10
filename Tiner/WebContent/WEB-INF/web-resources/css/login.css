@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+
+table{
+    margin: 0 auto;
+}
+td{
+    text-align:right;
+    border:none;
+    padding:8px;
+}
+h3{
+    text-align:center;
+    margin:5px;
+    color:#fff;
+}
+.head{
+	background:#9EC2DC;
+	border-radius:10px 10px 0px 0px;
+    border:1px #ccc solid;
+}
+.body{
+    
+    border-left:1px #ccc solid;
+    border-right:1px #ccc solid;
+}
+.bottom{
+    border-top:1px #ccc solid;
+}
