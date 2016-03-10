@@ -16,9 +16,14 @@ public abstract class TinerBaseService extends MultiAction{
 	
 	
 	public String execute(RequestContext requestContext,Model model){
-		paramMap = requestContext.getRequestParameters();
-		request = requestContext;
-		return _execute(model);
+		try{
+			paramMap = requestContext.getRequestParameters();
+			request = requestContext;
+			return _execute(model);
+		}catch(Exception e){
+			e.printStackTrace();
+			return "ng";
+		}
 	}
 	
 	

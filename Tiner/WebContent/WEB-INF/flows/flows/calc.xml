@@ -13,13 +13,13 @@
     </action-state>
     
     <action-state id="updateProduct" parent="systemBaseFlow#baseaction"> 
-        <evaluate expression="mainService.execute(flowRequestContext,form)" />
+        <evaluate expression="updateProductService.execute(flowRequestContext,form)" />
         <transition on="ok" to="startup" />
         <transition on="syserr" to="syserr" />
     </action-state>
     
     <view-state id="index" parent="systemBaseFlow#baseview" model="form"> 
-        <transition on="submit" to="main">  
+        <transition on="submit" to="updateProduct">  
         </transition>  
     </view-state>  
     

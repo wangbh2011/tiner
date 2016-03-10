@@ -24,18 +24,18 @@ function setGoodsInfo(trELement){
 			var key = "";
 			if(element.length > 0){
 				key = element.attr("name");
-				item[key] = {};
-				item[key].element = element;
+				item[key] = element;
 			}else{
 				if($(td).hasClass("cnyPrice")){
 					key = "cnyPrice";
 				}else if($(td).hasClass("productProfit")){
 					key = "productProfit";
+				}else if($(td).hasClass("rate")){
+					key = "rate";
 				}else{
 					key = "created";
 				}
-				item[key] = {};
-				item[key].element = $(td);
+				item[key] = $(td);
 			}
 			
 		});
@@ -85,31 +85,40 @@ function initTable(){
 		currentTR.remove();
 	});
 	generatePriceChange(currentTR);
+
+	generatePriceChange($(".db-data"));
 	
-	$("#submit").click(function(){
+	$("#doPost").click(function(){
 		var list = [];
 		for(var row in goodsInfo){
 			var status = goodsInfo[row].status;
 			var items = goodsInfo[row].items;
 			var item = {};
 			for(var key in items){
-				var element = items[key].element;
+				var element = items[key];
 				var value = null;
 				if(element.is("input")){
 					value = element.val();
 				}else if(element.is("textarea")){
-					value = element.text();
+					value = element.val();
 				}else if(element.is("td")){
-					value = element.text();
+					value = element.text().trim();
+				}
+				if(key == "rate"){
+					if(value == ""){
+						value = $("span.rate").text();
+					}
 				}
 				item[key] = value;
 			}
 			item.status = status;
-			list.push(item);
+			if(item.customerName != ""){
+				list.push(item);
+			}
 		}
 		
 		$("input[name='goodsJsonString']").val(JSON.stringify(list));
-		$("#calcForm").submit();
+		$("form").submit();
 	});
 }
 
@@ -123,9 +132,13 @@ function generatePriceChange(trElem){
 		
 		if(jpyPrice != "" && quantity != ""){
 			var cnyRate = $("span.rate").text();
-			
+
+			if(trElem.is(".db-data")){
+				cnyRate = tr.find("td.rate").text();
+			}
 			// 人民币价格计算
 			var cnyPrice = new Number(parseFloat(rates.CNY) * parseInt(jpyPrice) * parseInt(quantity));
+			
 			cnyPrice =  cnyPrice.toFixed(2);
 			
 			tr.find("td.cnyPrice").text(cnyPrice);
@@ -140,6 +153,9 @@ function generatePriceChange(trElem){
 				}
 			}
 		}
+	});
+	trElem.find("input[name='sendDate']").datepicker({
+		dateFormat:"yy-mm-dd",
 	});
 }
 
@@ -163,6 +179,6 @@ function initCurrentRate(){
 function getNow() {
 	var now = new Date();
 
-	return $.datepicker.formatDate("yy-mm-d", now) + ' ' + now.getHours() + ':'
+	return $.datepicker.formatDate("yy-mm-dd", now) + ' ' + now.getHours() + ':'
 			+ now.getMinutes() + ':' + now.getSeconds();
 }
